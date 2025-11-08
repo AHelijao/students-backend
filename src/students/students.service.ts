@@ -1,47 +1,49 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Student } from './entitites/student.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateStudentDto } from './dto/create-student.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Injectable()
 export class StudentsService {
-  private students: Student[] = [
-    {
-      id: 1,
-      name: 'John',
-      promotion: 'Fall-2025',
-      courses: ['JS', 'Java'],
-    },
-  ];
+  constructor(
+    @InjectRepository(Student)
+    private readonly studentRepository: Repository<Student>,
+  ) {}
 
   findAll() {
-    return this.students;
+    return this.studentRepository.find();
   }
 
-  findOne(id: string) {
-    const student = this.students.find((student) => student.id === +id);
+  async findOne(id: string) {
+    const student = await this.studentRepository.findOne({
+      where: { id: +id },
+    });
     if (!student) {
       throw new NotFoundException(`Student #${id} not found`);
     }
     return student;
   }
 
-  create(createStudentDto: any) {
-    this.students.push(createStudentDto);
-    return createStudentDto;
+  create(createStudentDto: CreateStudentDto) {
+    const student = this.studentRepository.create(createStudentDto);
+    return this.studentRepository.save(student);
   }
 
-  update(id: string, updateStudentDto: any) {
-    const existingStudent = this.findOne(id);
-    if (existingStudent) {
-      console.log(existingStudent);
+  async update(id: string, updateStudentDto: UpdateStudentDto) {
+    const student = await this.studentRepository.preload({
+      id: +id,
+      ...updateStudentDto,
+    });
+    if (!student) {
+      throw new NotFoundException(`Student #${id} not found`);
     }
+    return this.studentRepository.save(student);
   }
 
-  remove(id: string) {
-    const studentIndex = this.students.findIndex(
-      (student) => student.id === +id,
-    );
-    if (studentIndex >= 0) {
-      this.students.splice(studentIndex, 1);
-    }
+  async remove(id: string) {
+    const student = await this.findOne(id);
+    return this.studentRepository.remove(student);
   }
 }
