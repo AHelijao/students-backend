@@ -1,0 +1,68 @@
+### Students API
+
+### Get all students
+GET http://localhost:3000/students
+
+### Get student by ID
+# @name getStudent
+GET http://localhost:3000/students/1
+
+### Create a new student
+# This will create a student named "Jane Doe" and link them to the course with ID 1.
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "promotion": "Spring-2026",
+  "courses": [1]
+}
+
+### Update a student
+PATCH http://localhost:3000/students/1
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated"
+}
+
+### Delete a student
+DELETE http://localhost:3000/students/2
+
+
+### Courses API
+
+### Get all courses
+GET http://localhost:3000/courses
+
+### Get course by ID
+# @name getCourse
+GET http://localhost:3000/courses/1
+
+### Create a new course
+POST http://localhost:3000/courses
+Content-Type: application/json
+
+{
+  "name": "Advanced TypeScript",
+  "description": "A deep dive into advanced TypeScript features."
+}
+
+### Update a course
+PATCH http://localhost:3000/courses/1
+Content-Type: application/json
+
+{
+  "description": "An updated and more detailed course description."
+}
+
+### Delete a course
+DELETE http://localhost:3000/courses/2
+
+
+### Linking Courses to Students
+
+### Add a course to a student
+# This will add the course with ID 2 to the student with ID 1.
+POST http://localhost:3000/students/1/courses/2
+
