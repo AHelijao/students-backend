@@ -15,28 +15,28 @@ export class StudentsController {
 
   @Get()
   findAll() {
-    return 'This action returns all students';
+    return this.studentsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     console.log(id);
-    return `This action returns student #${id}`;
+    return this.studentsService.findOne(id);
   }
 
   @Post()
   create(@Body() body) {
     console.log(typeof body);
-    return body;
+    return this.studentsService.create(body);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() body) {
-    return `This action updates student #${id} by applying this ${body}`;
+    return this.studentsService.update(id, body);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `This action deletes student #${id}`;
+    return this.studentsService.remove(id);
   }
 }
