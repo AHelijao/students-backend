@@ -9,7 +9,6 @@ export class Course {
   @Column()
   name: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToMany((type) => Student, (student) => student.courses)
+  @ManyToMany(() => Student, (student) => student.courses)
   students: Student[];
 }

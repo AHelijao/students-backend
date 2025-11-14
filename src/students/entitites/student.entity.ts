@@ -19,7 +19,6 @@ export class Student {
   promotion: string;
 
   @JoinTable()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToMany((type) => Course, (course) => course.students)
-  courses: Student[];
+  @ManyToMany(() => Course, (course) => course.students, { cascade: true })
+  courses: Course[];
 }

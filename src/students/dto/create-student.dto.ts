@@ -1,5 +1,4 @@
 import { IsString } from 'class-validator';
-import { Course } from '../entitites/course.entity';
 
 export class CreateStudentDto {
   @IsString()
@@ -9,5 +8,5 @@ export class CreateStudentDto {
   readonly promotion: string;
 
   @IsString({ each: true })
-  readonly courses: Course[];
+  readonly courses: string[];
 }
