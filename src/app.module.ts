@@ -15,6 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: 'pass123',
       autoLoadEntities: true, // models will load automatically
       synchronize: true, // entities will be synched with the db
+      poolSize: 10,
     }),
   ],
   controllers: [AppController],

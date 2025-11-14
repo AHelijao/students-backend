@@ -18,6 +18,9 @@ export class Student {
   @Column()
   promotion: string;
 
+  @Column({ default: 0 })
+  recommendations: number;
+
   @JoinTable()
   @ManyToMany(() => Course, (course) => course.students, { cascade: true })
   courses: Course[];
